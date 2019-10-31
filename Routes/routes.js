@@ -2,9 +2,7 @@ let router = require('express').Router();
 
 
 // Get all reviews for one product
-router.get('/reviews/:product_id/list', (req, res, next) => {
-
-})
+router.get('/reviews/:product_id/list', reviews.getAll)
 // get meta data (ratings / characteristics) for one product
 router.get('/reviews/:product_id/meta', (req, res, next) => {
 
