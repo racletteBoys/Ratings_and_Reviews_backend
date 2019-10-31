@@ -22,4 +22,4 @@ router.put('/reviews/report/:review_id', (req, res, next) => {
 
 })
 
-module.exports = request;
+module.exports = router;
