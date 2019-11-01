@@ -1,7 +1,7 @@
-// require models here once they are complete
+// require models here once they are completeconst
+const models = require('../Database/database.js')
 
-
-
+models().then((results) => {console.log('CONTROLLER: ', results)})
 
 const review = {
     "product": "",
