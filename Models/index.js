@@ -35,9 +35,41 @@ const getAll = function(product_id, page, count) {
                 "helpfulness": rows[i].helpfulness,
                 "photos": []
             }
+            db.query(`SELECT * from reviews_photos WHERE review_id = 5`)
+            .then((results) => {
+                const rows = results.rows;
+                const photoObj = {};
+                const photos = [];
+                //console.log('photo rows', rows);
+                for (let i = 0; i < rows.length; i++) {
+                    photoObj.id = rows[i].id;
+                    photoObj.url = rows[i].url;
+                    photos.push(photoObj);
+                }
+                return photos;
+            })
+            
             listResponse.results.push(review);
         }
         return listResponse
+    })
+}
+
+
+const getPhotos = (review_id) => {
+    db.query(`SELECT * from reviews_photos WHERE review_id = ${review_id}`)
+    .then((results) => {
+        const rows = results.rows;
+        const photoObj = {};
+        const photos = [];
+        //console.log('photo rows', rows);
+        for (let i = 0; i < rows.length; i++) {
+            photoObj.id = rows[i].id;
+            photoObj.url = rows[i].url;
+            photos.push(photoObj);
+        }
+        list.results.push(review)
+        return photos;
     })
 }
 
