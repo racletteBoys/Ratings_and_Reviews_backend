@@ -2,23 +2,21 @@ const db = require('../Database/database.js')
 
 
 
-const getAll = function(product_id, page, count) {
+const getAll = async function(product_id, page, count) {
     const listResponse = {
         "product": "",
         "page": 0,
         "count": 0,
         "results": []
     }
-
-
-    
     // SELECT * from reviews WHERE product_id = (input) LIMIT (count)
-    return db.query(`SELECT * from reviews WHERE product_id = ${product_id} LIMIT ${count}`)
-    .then((results) => {
+    let results = await db.query('SELECT * from reviews WHERE product_id = $1 LIMIT $2', [product_id, count])
+        //console.log(results);
         let rows = results.rows
         listResponse.product = product_id;
         listResponse.page = page;
         listResponse.count = count;
+        const reviews = []
         for (var i = 0; i < rows.length; i++) {
             if (rows[i].reported === true) {
                 continue;
@@ -35,43 +33,26 @@ const getAll = function(product_id, page, count) {
                 "helpfulness": rows[i].helpfulness,
                 "photos": []
             }
-            db.query(`SELECT * from reviews_photos WHERE review_id = 5`)
-            .then((results) => {
-                const rows = results.rows;
-                const photoObj = {};
-                const photos = [];
-                //console.log('photo rows', rows);
-                for (let i = 0; i < rows.length; i++) {
-                    photoObj.id = rows[i].id;
-                    photoObj.url = rows[i].url;
-                    photos.push(photoObj);
-                }
-                return photos;
-            })
             
             listResponse.results.push(review);
         }
-        return listResponse
-    })
-}
-
-
-const getPhotos = (review_id) => {
-    db.query(`SELECT * from reviews_photos WHERE review_id = ${review_id}`)
-    .then((results) => {
-        const rows = results.rows;
-        const photoObj = {};
-        const photos = [];
-        //console.log('photo rows', rows);
-        for (let i = 0; i < rows.length; i++) {
-            photoObj.id = rows[i].id;
-            photoObj.url = rows[i].url;
-            photos.push(photoObj);
+        let reviewStorage = [];
+        for (var i = 0; i < listResponse.results.length; i++) {
+            let review = listResponse.results[i];
+            //console.log('INSIDE PHOTO QUERY: ', review.review_id)
+            let photos = (await db.query(`SELECT * from reviews_photos WHERE review_id = ${review.review_id}`)).rows;
+                const photoObj = {};
+                for (let i = 0; i < photos.length; i++) {
+                    photoObj.id = photos[i].id;
+                    photoObj.url = photos[i].url;
+                    await listResponse.results[i].photos.push(photoObj)
+                }
+                console.log('Review.photos after query: ', review)
         }
-        list.results.push(review)
-        return photos;
-    })
+        console.log('Final listResponse: ', listResponse.results[1])
+        return listResponse
 }
+
 
 
 module.exports = { getAll };
