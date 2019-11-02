@@ -12,13 +12,4 @@ pool.on('error', (err, client) => {
     process.exit(-1)
   })
 
-  // Select all reviews from the reviews table
-const getAll = function() {
-     return pool.query('SELECT * from reviews WHERE id = 5')
-     .then((results) => {
-         console.log('DATABASE QUERY: ', results.rows[0])
-         return results.rows[0]
-     })
-    
-}
-module.exports = getAll;
+module.exports = pool;
