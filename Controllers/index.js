@@ -1,7 +1,7 @@
 // require models here once they are completeconst
 const models = require('../Models/index.js').getAll
 
-models(3, 6).then((results) => {console.log('CONTROLLER: ', results)})
+models(5, 1, 3).then((results) => {console.log('CONTROLLER: ', results)})
 
 const review = {
     "product": "",
