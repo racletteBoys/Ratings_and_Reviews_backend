@@ -13,7 +13,7 @@ const getAll = function(product_id, page, count) {
 
     
     // SELECT * from reviews WHERE product_id = (input) LIMIT (count)
-    return db.query(`SELECT * from reviews WHERE product_id = ${product_id}`)
+    return db.query(`SELECT * from reviews WHERE product_id = ${product_id} LIMIT ${count}`)
     .then((results) => {
         let rows = results.rows
         listResponse.product = product_id;
