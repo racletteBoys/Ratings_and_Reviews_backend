@@ -1,9 +1,14 @@
 // require models here once they are completeconst
-const getAll = require('../Models/getAll.js').getAll
+const getAll = require('../Models/getAll.js').getAll;
+const getMeta = require('../Models/getMeta.js').getMeta;
 const db = require('../Database/database.js')
 
-getAll(1, 1, 5).then((results) => {
-    console.log('CONTROLLER: ', results)
+// getAll(1, 1, 5).then((results) => {
+//     console.log('CONTROLLER: ', results)
+// })
+
+getMeta(5).then((results) => {
+    console.log('Ratings Object: ', results)
 })
 
 
