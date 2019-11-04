@@ -87,7 +87,7 @@ const getMeta = async function(product_id) {
     
 
     for (let i = 0; i < charRows.length; i++) {
-        characteristicObj[charRows[i].name] = {};
+
         const valueQuery = await db.query(`SELECT * from characteristics_reviews WHERE characteristic_id = ${charRows[i].id}`);
         let valueRows = valueQuery.rows;
         console.log('VALUE ROWS: ', valueRows)
@@ -105,7 +105,9 @@ const getMeta = async function(product_id) {
             }
         }
         nameObj.value = sum / valueRows.length;
-        characteristicObj[charRows[i].name] = nameObj;
+        if (nameObj.id !== 0) {
+            characteristicObj[charRows[i].name] = nameObj;
+        }
     }
     response.characteristics = characteristicObj;
     return response;

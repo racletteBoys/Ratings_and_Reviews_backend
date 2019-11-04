@@ -2,16 +2,19 @@ const db = require('../Database/database.js')
 
 
 
-const getAll = async function(product_id, page = 0, count = 5) {
+const getAll = async function(product_id, page, count) {
+
     const listResponse = {
         "product": "",
         "page": 0,
         "count": 0,
         "results": []
     }
+    let end = page * count;
+    let beginning = end - count;
 
     // SELECT * from reviews WHERE product_id = (input) LIMIT (count)
-    let results = await db.query('SELECT * from reviews WHERE product_id = $1 LIMIT $2', [product_id, count])
+    let results = await db.query('SELECT * from reviews WHERE product_id = $1 LIMIT $2 OFFSET $3', [product_id, count, beginning])
         //console.log(results);
         let rows = results.rows
         listResponse.product = product_id;

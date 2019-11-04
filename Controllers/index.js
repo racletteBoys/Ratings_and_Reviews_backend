@@ -1,23 +1,24 @@
 // require models here once they are completeconst
-const getAll = require('../Models/getAll.js').getAll;
+const getList = require('../Models/getAll.js').getAll;
 const getMeta = require('../Models/getMeta.js').getMeta;
 const db = require('../Database/database.js')
 
 // getAll(1, 1, 5).then((results) => {
-//     console.log('CONTROLLER: ', results)
+
 // })
 
-getMeta(5).then((results) => {
-    console.log('Ratings Object: ', results)
-})
+// getMeta(5).then((results) => {
+//     console.log('Ratings Object: ', results)
+// })
 
 
 module.exports = {
     reviews: {
-        getAll: function(req, res) {
-            models.getAll((err, results) => {
-                res.send(results);
-            })
+        getAll: async function(req, res) {
+            let page = req.query.page || 1;
+            let count = req.query.count || 5;
+           let result = await getList(req.params.product_id, page, count)
+           res.send(result);
         },
         getMeta: function(req, res) {
             models.getMeta((err, results) => {
