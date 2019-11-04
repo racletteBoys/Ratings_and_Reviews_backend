@@ -55,6 +55,10 @@ const getMeta = async function(product_id) {
         4: 0,
         5: 0
     }
+    let recommendedObj = {
+        0: 0,
+        1: 0
+    }
     for (let i = 0; i < rows.length; i++) {
         if (rows[i].rating === 1) {
             ratingsObj[1] += 1;
@@ -67,8 +71,15 @@ const getMeta = async function(product_id) {
         } else if (rows[i].rating === 5) {
             ratingsObj[5] += 1;
         }
+
+        if (rows[i].recommend === false) {
+            recommendedObj[0] += 1;
+        } else if (rows[i].recommend === true) {
+            recommendedObj[1] += 1;
+        }
     }
     response.ratings = ratingsObj;
+    response.recommended = recommendedObj;
     return response;
 }
 
