@@ -85,20 +85,27 @@ const getMeta = async function(product_id) {
     let charRows = characteristicsQuery.rows;
     let characteristicObj = {};
     
+
     for (let i = 0; i < charRows.length; i++) {
         characteristicObj[charRows[i].name] = {};
-        const valueQuery = await db.query(`SELECT * from characteristics_reviews WHERE review_id = ${charRows[i].id}`);
+        const valueQuery = await db.query(`SELECT * from characteristics_reviews WHERE characteristic_id = ${charRows[i].id}`);
         let valueRows = valueQuery.rows;
-        //console.log('VALUE ROWS: ', valueRows)
+        console.log('VALUE ROWS: ', valueRows)
+        let sum = 0;
         let nameObj = {
             "id": 0,
             "value": 0
         }
-        for (let j = 0; j < valueRows.length; j++) {
-            nameObj.id = valueRows[j].characteristic_id;
-            nameObj.value = valueRows[j].value;
-            characteristicObj[charRows[j].name] = nameObj;
+        if (!valueRows.length) {
+            continue;
+        } else {
+            for (let j = 0; j < valueRows.length; j++) {
+                nameObj.id = valueRows[0].characteristic_id;
+                sum += valueRows[j].value
+            }
         }
+        nameObj.value = sum / valueRows.length;
+        characteristicObj[charRows[i].name] = nameObj;
     }
     response.characteristics = characteristicObj;
     return response;
