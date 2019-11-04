@@ -2,13 +2,14 @@ const db = require('../Database/database.js')
 
 
 
-const getAll = async function(product_id, page, count) {
+const getAll = async function(product_id, page = 0, count = 5) {
     const listResponse = {
         "product": "",
         "page": 0,
         "count": 0,
         "results": []
     }
+
     // SELECT * from reviews WHERE product_id = (input) LIMIT (count)
     let results = await db.query('SELECT * from reviews WHERE product_id = $1 LIMIT $2', [product_id, count])
         //console.log(results);
@@ -16,7 +17,6 @@ const getAll = async function(product_id, page, count) {
         listResponse.product = product_id;
         listResponse.page = page;
         listResponse.count = count;
-        const reviews = []
         for (var i = 0; i < rows.length; i++) {
             if (rows[i].reported === true) {
                 continue;
@@ -36,7 +36,6 @@ const getAll = async function(product_id, page, count) {
             
             listResponse.results.push(review);
         }
-        let reviewStorage = [];
         for (var i = 0; i < listResponse.results.length; i++) {
             let review = listResponse.results[i];
             //console.log('INSIDE PHOTO QUERY: ', review.review_id)
