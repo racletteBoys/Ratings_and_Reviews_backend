@@ -68,7 +68,8 @@ const getMeta = async function(product_id) {
             ratingsObj[5] += 1;
         }
     }
-    return ratingsObj;
+    response.ratings = ratingsObj;
+    return response;
 }
 
 module.exports = { getMeta };
