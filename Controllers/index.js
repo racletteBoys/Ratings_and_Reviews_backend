@@ -20,10 +20,9 @@ module.exports = {
            let result = await getList(req.params.product_id, page, count)
            res.send(result);
         },
-        getMeta: function(req, res) {
-            models.getMeta((err, results) => {
-                res.send(results);
-            })
+        getMeta: async function(req, res) {
+            let result = await getMeta(req.params.product_id);
+            res.send(result);
         },
         addReview: function(req, res) {
             models.addReview((err, results) => {

@@ -6,10 +6,9 @@ let reviews = require('../Controllers/index.js')
 
 // Get all reviews for one product
 router.get('/:product_id/list', reviews.reviews.getAll);
-// get meta data (ratings / characteristics) for one product
-// router.get('/reviews/:product_id/meta', (req, res, next) => {
 
-// })
+//get meta data (ratings / characteristics) for one product
+router.get('/:product_id/meta', reviews.reviews.getMeta);
 // // post for adding a new review
 // router.post('/reviews/:product_id', (req, res, next) => {
 
