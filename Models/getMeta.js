@@ -46,4 +46,27 @@ const getMeta = async function(product_id) {
         "recommended": {},
         "characteristics": {}
     }
+    let reviewsQuery = await db.query(`SELECT * from reviews WHERE product_id = ${product_id}`);
+    let rows = reviewsQuery.rows;
+    let ratingsObj = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0
+    }
+    for (let i = 0; i < rows.length; i++) {
+        if (rows[i].rating === 1) {
+            ratingsObj[1] += 1;
+        } else if (rows[i].rating === 2) {
+            ratingsObj[2] += 1;
+        } else if (rows[i].rating === 3) {
+            ratingsObj[3] += 1;
+        } else if (rows[i].rating === 4) {
+            ratingsObj[4] += 1;
+        } else if (rows[i].rating === 5) {
+            ratingsObj[5] += 1;
+        }
+    }
+    return ratingsObj;
 }
