@@ -86,12 +86,19 @@ const getMeta = async function(product_id) {
     let characteristicObj = {};
     
     for (let i = 0; i < charRows.length; i++) {
+        characteristicObj[charRows[i].name] = {};
+        const valueQuery = await db.query(`SELECT * from characteristics_reviews WHERE review_id = ${charRows[i].id}`);
+        let valueRows = valueQuery.rows;
+        //console.log('VALUE ROWS: ', valueRows)
         let nameObj = {
             "id": 0,
             "value": 0
         }
-        characteristicObj[charRows[i].name] = {};
-        //const valueQuery = await db.query(`SELECT * from characteristics_reviews WHERE review_id = ${charRows[i].id}`)
+        for (let j = 0; j < valueRows.length; j++) {
+            nameObj.id = valueRows[j].characteristic_id;
+            nameObj.value = valueRows[j].value;
+            characteristicObj[charRows[j].name] = nameObj;
+        }
     }
     response.characteristics = characteristicObj;
     return response;
