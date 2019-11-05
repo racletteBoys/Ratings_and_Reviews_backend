@@ -49,9 +49,7 @@ const getAll = async function(product_id, page, count) {
                     photoObj.url = photos[i].url;
                     await listResponse.results[i].photos.push(photoObj)
                 }
-                console.log('Review.photos after query: ', review)
         }
-        console.log('Final listResponse: ', listResponse.results[1])
         return listResponse
 }
 
