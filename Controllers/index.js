@@ -2,6 +2,8 @@
 const getList = require('../Models/getAll.js').getAll;
 const getMeta = require('../Models/getMeta.js').getMeta;
 const addReview = require('../Models/addReview.js').addReview;
+const updateHelpful = require('../Models/updateData.js').updateHelpful;
+const reportQuery = require('../Models/updateData.js').reportReview;
 const db = require('../Database/database.js')
 
 // getAll(1, 1, 5).then((results) => {
@@ -29,15 +31,13 @@ module.exports = {
             let newReview = await addReview(req.params.product_id, req.body);
             res.send('Review Was added');
         },
-        markHelpful: function(req, res) {
-            models.markHelpful((err, results) => {
-                res.send('Review was marked as helpful');
-            })
+        markHelpful: async function(req, res) {
+            let marked = await updateHelpful(req.params.review_id);
+            res.send('Review was marked as helpful')
         },
-        report: function(req, res) {
-            models.report((err, results) => {
-                res.send('Review was reported');
-            })
+        report: async function(req, res) {
+            let reported = await reportQuery(req.params.review_id);
+            res.send('Review was reported');
         }
 
     }
