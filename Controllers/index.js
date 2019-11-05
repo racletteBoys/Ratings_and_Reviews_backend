@@ -26,8 +26,8 @@ module.exports = {
             res.send(result);
         },
         addReview: async function(req, res) {
-            let newReview = await addReview(req.params.product_id);
-            res.status().send('Review Was added');
+            let newReview = await addReview(req.params.product_id, req.body);
+            res.send('Review Was added');
         },
         markHelpful: function(req, res) {
             models.markHelpful((err, results) => {
