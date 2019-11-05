@@ -16,4 +16,6 @@ router.put('/helpful/:review_id', reviews.reviews.markHelpful);
 // // Report a review
 router.put('/report/:review_id', reviews.reviews.report);
 
+router.delete('/:review_id', reviews.reviews.delete);
+
 module.exports = router;

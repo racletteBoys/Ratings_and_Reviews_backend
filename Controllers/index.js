@@ -4,6 +4,7 @@ const getMeta = require('../Models/getMeta.js').getMeta;
 const addReview = require('../Models/addReview.js').addReview;
 const updateHelpful = require('../Models/updateData.js').updateHelpful;
 const reportQuery = require('../Models/updateData.js').reportReview;
+const deleteQuery = require('../Models/updateData.js').deleteRecord;
 const db = require('../Database/database.js')
 
 // getAll(1, 1, 5).then((results) => {
@@ -38,6 +39,10 @@ module.exports = {
         report: async function(req, res) {
             let reported = await reportQuery(req.params.review_id);
             res.send('Review was reported');
+        },
+        delete: async function(req, res) {
+            let deleted = await deleteQuery(req.params.review_id);
+            res.send('The review was deleted');
         }
 
     }

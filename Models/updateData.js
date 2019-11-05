@@ -8,4 +8,8 @@ const reportReview = async function(review_id) {
     const reported = db.query(`UPDATE reviews SET reported = true WHERE id = ${review_id}`);
 }
 
-module.exports = { updateHelpful, reportReview };
+const deleteRecord = async function(review_id) {
+    const deleted = db.query(`DELETE from reviews WHERE id = ${review_id}`);
+}
+
+module.exports = { updateHelpful, reportReview, deleteRecord };
