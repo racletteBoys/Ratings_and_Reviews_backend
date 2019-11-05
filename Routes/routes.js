@@ -9,10 +9,8 @@ router.get('/:product_id/list', reviews.reviews.getAll);
 
 //get meta data (ratings / characteristics) for one product
 router.get('/:product_id/meta', reviews.reviews.getMeta);
-// // post for adding a new review
-// router.post('/reviews/:product_id', (req, res, next) => {
-
-// })
+// post for adding a new review
+router.post('/:product_id', reviews.reviews.addReview);
 // // Mark a review as helpful
 // router.put('/reviews/helpful/:review_id', (req, res, next) => {
 

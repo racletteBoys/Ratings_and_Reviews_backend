@@ -1,6 +1,7 @@
 // require models here once they are completeconst
 const getList = require('../Models/getAll.js').getAll;
 const getMeta = require('../Models/getMeta.js').getMeta;
+const addReview = require('../Models/addReview.js').addReview;
 const db = require('../Database/database.js')
 
 // getAll(1, 1, 5).then((results) => {
@@ -24,10 +25,9 @@ module.exports = {
             let result = await getMeta(req.params.product_id);
             res.send(result);
         },
-        addReview: function(req, res) {
-            models.addReview((err, results) => {
-                res.send(results);
-            })
+        addReview: async function(req, res) {
+            let newReview = await addReview(req.params.product_id);
+            res.status().send('Review Was added');
         },
         markHelpful: function(req, res) {
             models.markHelpful((err, results) => {
