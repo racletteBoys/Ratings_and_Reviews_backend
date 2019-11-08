@@ -1,8 +1,10 @@
+const key = require('../config/config.js').database;
+
 const { Pool } = require('pg')
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
-  database: 'reviews_api',
+  database: key,
   password: 'password',
   port: 5432,
 })

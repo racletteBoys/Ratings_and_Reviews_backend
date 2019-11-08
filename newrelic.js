@@ -1,4 +1,4 @@
-const key = require('./config/config.js');
+const key = require('./config/config.js').newRelic
 
 'use strict'
 /**
