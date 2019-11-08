@@ -2,7 +2,7 @@ const db = require('../Database/database.js')
 
 
 
-const getAll = async function(product_id, page, count) {
+const getAll = async function(product_id, page, count, sort) {
 
     const listResponse = {
         "product": "",
@@ -15,7 +15,6 @@ const getAll = async function(product_id, page, count) {
 
     // SELECT * from reviews WHERE product_id = (input) LIMIT (count)
     let results = await db.query('SELECT * from reviews WHERE product_id = $1 LIMIT $2 OFFSET $3', [product_id, count, beginning])
-        //console.log(results);
         let rows = results.rows
         listResponse.product = product_id;
         listResponse.page = page;
@@ -50,6 +49,21 @@ const getAll = async function(product_id, page, count) {
                     await listResponse.results[i].photos.push(photoObj)
                 }
         }
+        if (sort === "helpful") {
+            listResponse.results.sort((a, b) => {
+                return a.helpfulness - b.helpfulness;
+            })
+        } else if (sort === "newest") {
+            listResponse.results.sort((a, b) => {
+                let dateA = new Date(a.date);
+                let dateB = new Date(b.date);
+                return dateA - dateB;
+
+            })
+        } else if (sort === "relevant") {
+            return listResponse;
+        }
+
         return listResponse
 }
 

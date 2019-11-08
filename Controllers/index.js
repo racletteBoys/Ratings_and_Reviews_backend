@@ -17,17 +17,16 @@ const client = redis.createClient(REDIS_PORT);
 module.exports = {
     reviews: {
         getAll: async function(req, res) {
+            let sort = req.query.sort || "relevant";
             let page = req.query.page || 1;
             let count = req.query.count || 5;
-            let result = await getList(req.params.product_id, page, count)
-            const product_id = req.params.product_id;
-            client.setex(product_id, 3600, JSON.stringify(result));
+            let result = await getList(req.params.product_id, page, count, sort)
+            client.setex('list', 60, JSON.stringify(result));
             res.send(result);
         },
         getMeta: async function(req, res) {
             let result = await getMeta(req.params.product_id);
-            const product_id = req.params.product_id;
-            client.setex(product_id, 3600, JSON.stringify(result));
+            client.setex('meta', 60, JSON.stringify(result));
             res.send(result);
         },
         addReview: async function(req, res) {

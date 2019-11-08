@@ -1,20 +1,5 @@
 const db = require('../Database/database.js')
 
-
-// query reviews (select * from reviews where product_id = product_id)
-    // loop through the rows, check what key in ratings the current rating matches
-    // and increment the correct one
-
-    // also check if recommended or not, if not, increment key 0 in characteristics, else key 1
-
-// After that, make query to characteristics table with product_id
-    // (SELECT * from characteristics WHERE product_id = product_id)
-
-    // instantiate a new characteristics object
-        // loop through the returned rows, grab the name and set in the new obj instance
-        // set the name's id and value from loop
-    // insert the instance obj into the characteristics prop in response obj
-
 const getMeta = async function(product_id) {
     const response = {
         "product_id": product_id,
@@ -90,12 +75,3 @@ const getMeta = async function(product_id) {
 }
 
 module.exports = { getMeta };
-
-// Make query to characteristics table, X
-    // loop through the response rows X
-    // create new characteristicsObj, with rows[i].name as the name, X
-        // make a new query to characteristics_reviews table using rows[i].id 
-            // create a new nameObj
-            // loop through response rows,
-            // set id to rows[i].characteristic_id and value to rows[i].value
-        // append nameObj to characteristicObj
