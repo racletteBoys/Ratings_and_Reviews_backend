@@ -4,8 +4,8 @@ const { Pool } = require('pg')
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
-  database: key,
-  password: 'password',
+  database: 'reviews_api',
+  password: key,
   port: 5432,
 })
 
